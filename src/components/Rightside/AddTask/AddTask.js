@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Paper } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
 import Form from '../Form/Form';
 
@@ -19,6 +20,9 @@ function AddTask (props) {
     const [ title, setTitle ] = useState('');
     const [ priority, setPriority] = useState(1);
     const [ complete, setComplete] = useState(false);
+    const history = useHistory();
+
+    const toggleComplete = () => setComplete(prev => !prev)
 
     const submitHandler = async (e) => {
         e.preventDefault()
@@ -31,7 +35,10 @@ function AddTask (props) {
            },
            body: JSON.stringify({title, complete, priority})
        })
-       .then(response => {})
+       .then(response => {
+           history.push('/')
+           window.location.reload(false)
+       })
        .catch(error => console.log(error))
     }
 
@@ -42,7 +49,7 @@ function AddTask (props) {
                 title={title}
                 setPriority={(value) => setPriority(value)}
                 priority={priority}
-                setComplete={(value) => setComplete(value)}
+                toggleComplete={toggleComplete}
                 complete={complete}
                 submit={ submitHandler }
                 />

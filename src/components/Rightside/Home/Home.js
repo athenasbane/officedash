@@ -34,7 +34,7 @@ function Home(props) {
                 </Grid>
             </Grid>
         </Paper>
-    )
-}
+    );
+};
 
 export default withStyles(styles)(Home);

@@ -6,12 +6,9 @@ import {
     InputLabel,
     MenuItem, 
     Select, 
-    FormLabel, 
-    RadioGroup, 
+    Switch, 
     FormControlLabel, 
-    Radio, 
     Button, 
-    FormControl,
     makeStyles
 } from '@material-ui/core';
 
@@ -49,45 +46,39 @@ export default function Form (props) {
                                 className={classes.input} 
                                 onChange={(e) => props.setTitle(e.target.value)} 
                                 label="Title" 
-                                value={props.title}/> 
+                                value={props.title || ""}/> 
                         </Grid>
                         <Grid className={classes.priority} item>
                             <InputLabel>Priority:</InputLabel>
                         </Grid>
-                        <Grid className={classes.priority} item xs={4}>
-                        <Select
-                            value={props.priority}
-                            onChange={e => props.setPriority(e.target.value)}
-                        >
-                            <MenuItem value={1}>1</MenuItem>
-                            <MenuItem value={2}>2</MenuItem>
-                            <MenuItem value={3}>3</MenuItem>
-                            <MenuItem value={4}>4</MenuItem>
-                            <MenuItem value={5}>5</MenuItem>
-                        </Select>
+                        <Grid className={classes.priority} item xs={4}>         
+                            <Select
+                                value={props.priority || 1}
+                                onChange={e => props.setPriority(e.target.value)}
+                            >
+                                <MenuItem value={1}>1</MenuItem>
+                                <MenuItem value={2}>2</MenuItem>
+                                <MenuItem value={3}>3</MenuItem>
+                                <MenuItem value={4}>4</MenuItem>
+                                <MenuItem value={5}>5</MenuItem>
+                            </Select>
                         </Grid>
                     </Grid>
                     <Grid item container direction="row" justify="center" align="center">
                         <Grid item className={classes.radio} xs={6} >
-                            <FormControl component="fieldset">
-                                <Grid item container direction="row" spacing={1} alignItems="center" >
-                                    <Grid item>
-                                        <FormLabel component="legend">Complete:</FormLabel>
-                                    </Grid>
-                                    <Grid item>
-                                        <RadioGroup onChange={e => props.setComplete(e.target.value)} row value={props.complete}>
-                                            <FormControlLabel value={true} control={<Radio />} label="True" />
-                                            <FormControlLabel value={false} control={<Radio />} label="False" />
-                                        </RadioGroup>
-                                    </Grid> 
-                                </Grid>
-                            </FormControl>
+                            <FormControlLabel
+                                control={<Switch checked={props.complete} 
+                                onChange={props.toggleComplete} />}
+                                label="Complete"
+                            />
                         </Grid>
                         <Grid item className={classes.radio} xs={6}>
                             <Button variant="contained" type="submit">Submit</Button>
                         </Grid>
                     </Grid>
-                </Grid>  
+                </Grid>   
             </form>
+           
+            
     );
 };

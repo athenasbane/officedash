@@ -22,6 +22,8 @@ export default function Todos (props) {
             taskArr.sort((a, b) => {
                 return a.priority - b.priority;
             }) 
+
+            taskArr = taskArr.filter((task) => !task.complete)
            
             setTasks(taskArr)
         })
@@ -34,6 +36,6 @@ export default function Todos (props) {
 
     return (
     <Container fixed>
-        {tasks.map(task => <Todo clicked={props.clicked} key={task.id} task={task}/>)}
+        {tasks.map((task, index) => <Todo clicked={props.clicked} key={task.id} task={task} index={index} />)}
     </Container>
 )};

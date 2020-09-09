@@ -20,6 +20,11 @@ function EditTask (props) {
     const [ priority, setPriority] = useState(1);
     const [ complete, setComplete] = useState(false);
 
+    const toggleComplete = () => {
+        console.log(complete)
+        setComplete(prev => !prev)
+    };
+
     const submitHandler = (e) => {
         e.preventDefault()
 
@@ -32,7 +37,9 @@ function EditTask (props) {
             body: JSON.stringify({ title, complete, priority })
 
         })
-        .then(response => { console.log(response )})
+        .then(response => { 
+            window.location.reload(false)
+        })
         .catch(error => console.log(error))
     }
 
@@ -40,7 +47,7 @@ function EditTask (props) {
         const abortController = new AbortController();
         const signal = abortController.signal;
 
-        fetch(url, {
+        fetch(url + `/${props.id}.json`, {
             signal: signal,
             method: 'GET',
             mode: 'cors',
@@ -50,27 +57,28 @@ function EditTask (props) {
         })
         .then(response => response.json())
         .then(data => {
+            console.log(data)
             setTitle(data.title)
             setPriority(data.priority)
             setComplete(data.complete)
         })
-        .then()
+
     
     return function cleanup() {
         abortController.abort()
         }
-    }, [])
+    }, [props.id])
     
 
     return (
-        <Paper className={classes.root}>
+        <Paper className={ classes.root }>
             <Form 
-                setTitle={(value) => setTitle(value)}
-                title={title}
-                setPriority={(value) => setPriority(value)}
-                priority={priority}
-                setComplete={(value) => setComplete(value)}
-                complete={complete}
+                setTitle={ (value) => setTitle(value) }
+                title={ title }
+                setPriority={ (value) => setPriority(value) }
+                priority={ priority }
+                toggleComplete={ toggleComplete }
+                complete={ complete }
                 submit={ submitHandler }
                 />
         </Paper>

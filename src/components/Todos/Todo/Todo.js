@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Paper, Typography, Grid, makeStyles } from '@material-ui/core';
+import { Paper, Typography, Grid, makeStyles, Grow } from '@material-ui/core';
 
 function Todo(props) {
 
@@ -22,23 +22,26 @@ function Todo(props) {
     const classes = useStyles();
 
     return (
-        <Paper
+        <Grow in timeout={props.index * 500}>
+          <Paper
             onClick={() => props.clicked(props.task.id)} 
             className={classes.root} 
             hidden={props.task.completed}>
-            <Grid container spacing={3} direction="row" justify="center" alignItems="center">
-                <Grid item>
-                    <Typography variant="h3" component="h2" gutterBottom>
-                        {props.task.title}
-                    </Typography> 
+                <Grid container spacing={3} direction="row" justify="center" alignItems="center">
+                    <Grid item>
+                        <Typography variant="h3" component="h2" gutterBottom>
+                            {props.task.title}
+                        </Typography> 
+                    </Grid>
+                    <Grid item>
+                        <Typography variant="h4" component="h4" gutterBottom>
+                            Priority: {props.task.priority}
+                        </Typography>
+                    </Grid>
                 </Grid>
-                <Grid item>
-                    <Typography variant="h4" component="h4" gutterBottom>
-                        Priority: {props.task.priority}
-                    </Typography>
-                </Grid>
-            </Grid>
-        </Paper>
+            </Paper>  
+        </Grow>
+        
     );
 };
 
